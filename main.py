@@ -8,7 +8,9 @@ from utils.outputs import *
 def argument_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--img", help="path to the pgm file", default="scans/room2.pgm")
-    parser.add_argument("--verbose", help="show intermediate results", action="store_true")
+    parser.add_argument(
+        "--verbose", help="show intermediate results", action="store_true"
+    )
     parser.add_argument(
         "--output_path", help="path to place script ouput(s)", default="outputs"
     )
@@ -60,9 +62,11 @@ def block_plan_binarization(aligned_plan, verbose, verbose_path):
         aligned_plan, verbose=verbose, path=verbose_path
     )
 
-    roi, roi_contour = get_region_interest(coarse_filtered_plan,
-                                           verbose=verbose,
-                                           img_name=os.path.join(verbose_path, "6_fine_roi.png"))
+    roi, roi_contour = get_region_interest(
+        coarse_filtered_plan,
+        verbose=verbose,
+        img_name=os.path.join(verbose_path, "6_fine_roi.png"),
+    )
 
     edges_plan = cv2.Canny(roi, 200, 225)
 
@@ -103,13 +107,11 @@ def block_corner_extraction(lines_plan, roi, verbose, verbose_path):
     )
 
     # ORDER THE CORNERS TO THEN CONNECT LINES
-    ordered_corners = point_ordering(
-        corners, get_contour_interest(roi)
-    )
+    ordered_corners = point_ordering(corners, get_contour_interest(roi))
 
     filtered_corners = corner_angle_filter(ordered_corners)
 
-    mask = np.zeros_like(lines_plan[:,:,1].squeeze())
+    mask = np.zeros_like(lines_plan[:, :, 1].squeeze())
     cv2.fillPoly(mask, pts=[np.asarray(filtered_corners, dtype=np.int32)], color=255)
 
     return filtered_corners, mask
@@ -141,11 +143,15 @@ if __name__ == "__main__":
 
     # LINE EXTRACTION THROUGH SLIDING WINDOW (needs roi filled and roi edges)
     raw_lines_plan = sliding_window(
-        resized_edges_plan, verbose=verbose, name=os.path.join(verbose_path, "9_raw_line_map.png")
+        resized_edges_plan,
+        verbose=verbose,
+        name=os.path.join(verbose_path, "9_raw_line_map.png"),
     )
 
     # CORNERS EXTRACTION
-    corners, mask = block_corner_extraction(raw_lines_plan, resized_roi_plan, verbose, verbose_path)
+    corners, mask = block_corner_extraction(
+        raw_lines_plan, resized_roi_plan, verbose, verbose_path
+    )
 
     # OUTPUT GENERATION
     draw_plan(
