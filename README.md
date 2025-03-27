@@ -1,7 +1,7 @@
 # Introduction
 Repository with method to convert floor scans (in **.pgm** format) to a simplified representation. The simplified representation is generated in **.png, .svg, .json,** and **.dxf** formats. To do this conversion I used classical computer vision methods (not deep-learning-based).
 
-![Demo GIF](examples\example.gif)
+![Demo GIF](examples/example.gif)
 
 # Description
 ```mermaid
@@ -11,7 +11,7 @@ Repository with method to convert floor scans (in **.pgm** format) to a simplifi
   Binary --> Window(**Sliding Window** <br> **&** <br> **Line Detection**)
   Window --> Corner(**Corner Detection**)
   Corner --> PNG(**Image**: <br> Simplified Floor Plan <br>.png File)
-  Corner --> Vector(**Vector:** <br> Simplified Floor Plan <br> .svg, .json, and dxf Files)
+  Corner --> Vector(**Vectors:** <br> Simplified Floor Plan <br> .svg, .json, and dxf Files)
 ```
 The method is comprised of 5 stages:
 1. **Map Alignment**: Check the orientation of the scanned floor plan and align it with the x and y axes of the frame
@@ -23,7 +23,7 @@ The method is comprised of 5 stages:
 I invite you to look into [main.py](main.py) where you will find the overall pipeline divided into blocks and [outputs.py](utils/outputs.py) and [transforms.py](utils/transforms.py) to look at the used functions with detailed explanations of what they do.
 
 # Requirements
-This method was tested using Python 3.13.2, so please use an environment with that version of python. Additionally, the required packages can be found in the [requirements.txt](requirements.txt) and you can install them by running
+This method was tested using **Python 3.13.2**, so please use an environment with that version of python. Additionally, the required packages can be found in the [requirements.txt](requirements.txt) and you can install them by running
 
 For example you can create a [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) environment:
 ```bash
@@ -43,7 +43,7 @@ To execute the pipeline you can simply run:
 ```bash
 python main.py --img "<PATH/TO/PGM/FILE>"
 ```
-If you wanto also get intermediate results you can run:
+If you wan to also get intermediate results you can run:
 ```bash
 python main.py --img "<PATH/TO/PGM/FILE>" --verbose
 ```
